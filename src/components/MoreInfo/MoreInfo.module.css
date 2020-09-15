@@ -1,0 +1,12 @@
+.Image {
+    display: block;
+    max-width: 40%;
+    max-height: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.Center {
+    margin-left: auto;
+    margin-right: auto;
+}

@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 
 import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
-import classes from './ItemCards.css';
+import classes from './ItemCards.module.css';
 import Row from 'react-bootstrap/Row';
 
 class ItemCards extends Component {
@@ -42,24 +41,13 @@ class ItemCards extends Component {
                         ${product.price}
                     </Card.Body>
                     </a>
-                    {/* <div align="right"
-                        style={{
-                            paddingRight: '20px'
-                    }}>
-                    <Button variant="primary" onClick={() => this.props.addToCart(product.id)}>Add to Cart</Button>
-                    </div> */}
                     </Card>
                 </div>
             )
         });
    
     return (
-        <div className={classes.Cards}
-            style={{
-                paddingTop: '30px',
-                paddingBottom: '30px',
-                paddingLeft: '150px'
-            }}>
+        <div className={classes.Grid}>
             <Row>
                 {elements}
             </Row>

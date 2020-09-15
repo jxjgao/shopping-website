@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import Toolbar from '../../components/Toolbar/Toolbar';
+
 import ItemCards from '../../components/ItemCards/ItemCards.js';
 import Aux from '../../hoc/Aux/Aux';
 import Spinner from '../../components/UI/Spinner/Spinner';
@@ -9,13 +9,18 @@ import MoreInfo from '../../components/MoreInfo/MoreInfo';
 
 
 class MainPage extends Component {
-    state = {
-        products: [],
-        itemsInCart: [],
-        totalPrice: 0,
-        viewingMoreInfo: false,
-        currentViewingProductId: 0,
-        isLoaded: false
+    constructor(props) {
+        super(props);
+        this.state = {
+            products: [],
+            itemsInCart: [],
+            totalPrice: 0,
+            viewingMoreInfo: false,
+            currentViewingProductId: 0,
+            isLoaded: false
+        }
+        this.createNotification = this.createNotification.bind(this);
+        this.updateCart = this.updateCart.bind(this);
     }
 
     componentDidMount() {
@@ -29,15 +34,11 @@ class MainPage extends Component {
 
     }
 
-    addToCartHandler = (id) => {
+    addToCartHandler = (id, type) => {
         //returns product object with specified id
-         const product = this.state.products.find(product => product.id === id)
-         const productPrice = product.price
-         const currPrice = this.state.totalPrice
-         const newPrice = currPrice + productPrice
-         this.setState( {totalPrice: newPrice, itemsInCart: this.state.itemsInCart.concat([product])})
+        this.updateCart(id);
+        this.createNotification(type);
 
-         console.log(this.state.totalPrice, this.state.itemsInCart);
     }
 
     moreInfoClickHandler = (id) => {
@@ -47,6 +48,17 @@ class MainPage extends Component {
     moreInfoCancelHandler = () => {
         this.setState({viewingMoreInfo: false})
     }
+
+    updateCart = (id) => {
+        const product = this.state.products.find(product => product.id === id)
+        const productPrice = product.price
+        const currPrice = this.state.totalPrice
+        const newPrice = currPrice + productPrice
+        this.setState( {totalPrice: newPrice, itemsInCart: this.state.itemsInCart.concat([product])})
+        console.log(this.state.totalPrice, this.state.itemsInCart);
+
+    }
+
 
     render() {
         let itemGrid =  <ItemCards 
