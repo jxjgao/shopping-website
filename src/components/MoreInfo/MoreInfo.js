@@ -16,7 +16,7 @@ class MoreInfo extends Component {
                 <p>${(this.props.product.price).toFixed(2)}</p>
                 <Button 
                     btnType="Success"
-                    clicked={() => this.props.addToCart(this.props.product.id, 'success')}>Add to Cart</Button>
+                    clicked={() => this.props.addToCart(this.props.product._id)}>Add to Cart</Button>
             
                 <Button 
                     btnType="Danger"

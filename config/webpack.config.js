@@ -1,5 +1,4 @@
 'use strict';
-import 'react-notifications/lib/notifications.css';
 
 const fs = require('fs');
 const path = require('path');

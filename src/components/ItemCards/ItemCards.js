@@ -21,7 +21,7 @@ class ItemCards extends Component {
                         width: '20rem',
                         paddingBottom: '30px' 
                         }}>
-                    <a href="javascript:void(0)" onClick={()=> this.props.moreInfo(product.id)}>
+                    <a href="#" onClick={()=> this.props.moreInfo(product._id)}>
                     <Card.Img 
                         variant="top" 
                         src={product.image}
