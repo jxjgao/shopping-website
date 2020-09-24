@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Button from '../../../components/UI/Button/Button';
 import Spinner from '../../../components/UI/Spinner/Spinner';
-import axios from '../../../axio-cart';
+import Axios from '../../../axio-cart';
 import Input from '../../../components/UI/Input/Input';
 import classes from './ContactData.module.css';
 
@@ -98,10 +98,10 @@ class ContactData extends Component {
             shippingMethod: formData.shippingMethod
         }
 
-        axios.post( 'order/create-order', order )
+        Axios.post( '/order/create-order', order )
             .then( response => {
                 this.setState( { isLoaded: true } );
-                axios.put('cart/5f63e617b29b17b8d1f854a7/clear-cart-by-user-id');
+                Axios.put('/cart/5f63e617b29b17b8d1f854a7/clear-cart-by-user-id');
                 this.props.history.push( '/home' );
             } )
             .catch( error => {

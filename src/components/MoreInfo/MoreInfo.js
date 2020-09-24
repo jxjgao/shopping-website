@@ -14,6 +14,7 @@ class MoreInfo extends Component {
                     src={this.props.product.image}/>
                 <p className={classes.Center}>{this.props.product.description}</p>
                 <p>${(this.props.product.price).toFixed(2)}</p>
+
                 <Button 
                     btnType="Success"
                     clicked={() => this.props.addToCart(this.props.product._id)}>Add to Cart</Button>

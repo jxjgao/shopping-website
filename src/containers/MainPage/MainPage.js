@@ -61,9 +61,9 @@ class MainPage extends Component {
             //
         
         if (this.state.cartFound === true) {
-            await Axios.put('/cart/add-to-cart', {product: product, userID: '5f63e617b29b17b8d1f854a7', price: productPrice})
+            await Axios.put('/cart/add-to-cart', {productID: product._id, userID: '5f63e617b29b17b8d1f854a7', price: productPrice})
         } else {
-            await Axios.post('/cart/create-cart', {product: product, userID: '5f63e617b29b17b8d1f854a7', price: productPrice})
+            await Axios.post('/cart/create-cart', {productID: product._id, userID: '5f63e617b29b17b8d1f854a7', price: productPrice})
         }
     }
  

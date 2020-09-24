@@ -1,16 +1,17 @@
 import React, {Component} from 'react';
 
 import Button from '../UI/Button/Button';
+import classes from './CartSummary.module.css';
+import Quantity from '../Quantity/Quantity';
 
 class CartSummary extends Component {
     render() {
-        console.log(this.props.cart)
     let elements = []
 
     if (this.props.cart.length === 0) {
         elements = "Cart is Empty"
     }
-
+    console.log(this.props.cart)
     this.props.cart.map(product => {
         elements.push(
         <div>
@@ -35,12 +36,13 @@ class CartSummary extends Component {
                     bottom: '40px',
                     paddingLeft: '15px'
                 }}><strong>{product.title}</strong></span>
-                <span>Qty: {product.count}</span>
+                <span><Quantity min={0} max={99} product={product}/></span>
                 <div style={{
                      position: 'relative',
                      bottom: '80px',
                      paddingLeft: '135px'
                 }}>${(product.price).toFixed(2)}</div>
+
             </span>
         </div>
     </div>  
@@ -58,7 +60,7 @@ class CartSummary extends Component {
     }
 
     return (
-        <div>
+        <div className={classes.Cart}>
             {elements}
             {subtotalField}
             <div>
