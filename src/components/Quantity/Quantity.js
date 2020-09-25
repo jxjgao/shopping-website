@@ -17,16 +17,32 @@ class Quantity extends Component {
 
     this.incrementHandler = this.incrementHandler.bind(this);
     this.decrementHandler = this.decrementHandler.bind(this);
+    this.increment = this.increment.bind(this)
+    this.decrement = this.decrement.bind(this)
   }
 
   incrementHandler() {
+    this.props.increment(this.props.product.price)
+    this.increment()
+
+  }
+
+  decrementHandler() {
+    this.props.decrement(this.props.product.price)
+    this.decrement()
+  }
+  
+
+  increment() {
     const plusState = this.state.value + 1;
 
     if (this.state.value < this.props.max){
       this.setState({value: plusState});
       this.setState({disable: false});
       Axios.put('/cart/add-to-cart', {productID: this.props.product._id, userID: '5f63e617b29b17b8d1f854a7'})
+      
     }
+
     if (this.state.value === (this.props.max - 1)) {
       this.setState({disableInc: true});
     }
@@ -35,7 +51,7 @@ class Quantity extends Component {
     }
   }
 
-  decrementHandler() {
+  decrement() {
     const minusState = this.state.value - 1;
 
     if (this.state.value > this.props.min) {
@@ -63,7 +79,7 @@ class Quantity extends Component {
         <button className={cx(classes.QuantityModifier, 
                                 classes.LeftModifier,
                                 disabledDec)} 
-                                onClick={this.decrementHandler}>&ndash;</button>
+                                onClick={() => this.decrementHandler()}>&ndash;</button>
         <input className={classes.QuantityDisplay} type="text" value={this.state.value} readOnly />
         <button className={cx(classes.QuantityModifier, 
                                 classes.RightModifier,

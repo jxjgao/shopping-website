@@ -9,6 +9,11 @@
     height: 100%;
 }
 
+.Home {
+    font-size: 30px;
+    bottom: 20px;
+}
+
 @media (min-width: 500px) {
     .NavigationItems {
         flex-flow: row;

@@ -1,5 +1,4 @@
 .Loader {
-  padding-top: 50px;
     color: #39326c;
     font-size: 20px;
     margin: 100px auto;
@@ -14,6 +13,7 @@
     -ms-transform: translateZ(0);
     transform: translateZ(0);
   }
+
   @-webkit-keyframes load4 {
     0%,
     100% {

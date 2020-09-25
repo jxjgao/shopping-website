@@ -10,33 +10,15 @@ class ItemCards extends Component {
         //id: pos + 1
         this.props.productsList.map(product => {
             elements.push(
-                <div style={{
-                    paddingTop: '30px',
-                    paddingBottom: '30px',
-                    paddingLeft: '30px',
-                    paddingRight: '30px'
-                }}>
-                    <Card 
-                    style={{
-                        width: '20rem',
-                        paddingBottom: '30px' 
-                        }}>
+                <div className = {classes.Row}>
+                    <Card className={classes.Card}>
                     <a href="#" onClick={()=> this.props.moreInfo(product._id)}>
                     <Card.Img 
+                        className={classes.CardImage}
                         variant="top" 
                         src={product.image}
-                        style={{
-                            height: '300px',
-                            paddingTop: '20px',
-                            paddingLeft: '20px',
-                            paddingRight: '20px'
-                        }} 
                         />
-                    <Card.Body style={{
-                        paddingTop: '40px',
-                        height: '190px',
-                        
-                        }}>
+                    <Card.Body className={classes.CardBody}>
                         <Card.Title>{product.title}</Card.Title>
                         ${product.price}
                     </Card.Body>
@@ -47,10 +29,10 @@ class ItemCards extends Component {
         });
    
     return (
-        <div className={classes.Grid}>
-            <Row>
-                {elements}
-            </Row>
+        <div className={classes.ItemGroup}>
+        <Row>
+            {elements}
+        </Row>
         </div>
     )}
 };

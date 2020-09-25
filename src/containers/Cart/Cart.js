@@ -4,6 +4,7 @@ import { Route } from 'react-router-dom';
 import Axios from '../../axio-cart';
 import CartSummary from '../../components/CartSummary/CartSummary';
 import ContactData from './ContactData/ContactData';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 class Cart extends Component {
     state = {
@@ -32,12 +33,28 @@ class Cart extends Component {
         this.setState( { viewingContactData: true })
     }
 
+    checkoutGoBackHomeHandler = () => {
+        this.props.history.push('/home');
+    }
+
+    decrementHandler = (price) => {
+        this.setState( { totalPrice: this.state.totalPrice + (price * -1) })
+    }
+
+    incrementHandler = (price) => {
+        this.setState ( { totalPrice: this.state.totalPrice + price })
+    }
+
     render() {        
         let CartPage =  <CartSummary
                             cart = {this.state.cart}
                             price = {this.state.totalPrice}
                             checkoutContinued={this.checkoutContinuedHandler}
+                            goBackHome = {this.checkoutGoBackHomeHandler}
+                            increment = {this.incrementHandler}
+                            decrement = {this.decrementHandler}
                             />
+                            
 
         if (this.state.viewingContactData) {
             CartPage =  <Route 

@@ -8,6 +8,7 @@ import Aux from '../../hoc/Aux/Aux';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Modal from '../../components/UI/Modal/Modal';
 import MoreInfo from '../../components/MoreInfo/MoreInfo';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 
 class MainPage extends Component {
@@ -42,7 +43,6 @@ class MainPage extends Component {
     }
 
     moreInfoClickHandler = (id) => {
-        console.log(id)
         this.setState({viewingMoreInfo: true, currentViewingProductId: id});
     }
 
@@ -81,7 +81,6 @@ class MainPage extends Component {
           })
     }
 
-
     render() {
         let mainPageDisplay =  <ItemCards 
                                 productsList={this.state.products} 
@@ -114,4 +113,4 @@ class MainPage extends Component {
     }
 }
 
-export default MainPage
+export default withErrorHandler(MainPage, Axios)

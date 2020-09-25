@@ -1,9 +1,70 @@
+.Cart {
+    padding-top: 20px;
+}
+
 .CartItem {
-    width: '1200px';
-    height: '150px';
-    border: '1px solid #ccc';
-    box-shadow: '0 2px 3px #ccc';
-    padding: '10px';
-    margin: '10px auto';
-    box-sizing: 'border-box';
+    width: 1020px;
+    height: 150px;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 3px #ccc;
+    padding: 10px;
+    margin: 10px auto;
+    box-sizing: border-box;
+    
+}
+
+.CartTitle {
+    position: relative;
+    bottom: 40px;
+    padding-left: 40px;
+}
+
+.CartPrice {
+    position: relative;
+    font-size: 16px;
+    bottom: 90px;
+    padding-left: 142px;
+    padding-top: 10px;
+                            
+}
+
+.CartQuantity {
+    position: relative;
+    bottom: 80px;
+    padding-left: 142px;
+}
+
+.Button {
+    background-color: #4aadf0;
+}
+
+.CartImage {
+    width: 10%;
+    height: 90%;
+}
+
+.Checkout {
+    padding-top: 10px;
+    padding-left: 1299px;
+}
+
+.Subtotal {
+    padding-left: 1275px;
+    padding-top: 10px;
+    font-weight: bold;
+    padding-bottom: 20px;
+}
+
+.EmptyCartIcon {
+    padding-left: 885px;
+    padding-top: 200px;
+}
+
+.EmptyCartText {
+    padding-left: 730px;
+    font-size: 50px;
+}
+
+.EmptyCartBtn {
+    padding-left: 840px;
 }
