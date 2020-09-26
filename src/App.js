@@ -4,6 +4,7 @@ import {Route, Switch} from 'react-router-dom';
 import Layout from './hoc/Layout/Layout';
 import MainPage from './containers/MainPage/MainPage';
 import Cart from './containers/Cart/Cart';
+import classes from './App.module.css';
 
 class App extends Component {
   render () {

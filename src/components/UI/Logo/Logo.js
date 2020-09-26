@@ -1,6 +1,6 @@
 import React from 'react';
 
-import deerLogo from '../../assests/images/logo.png';
+import deerLogo from '../../../assests/images/logo.png';
 import classes from './Logo.module.css';
 
 const logo = (props) => (
