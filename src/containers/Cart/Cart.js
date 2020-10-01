@@ -1,26 +1,33 @@
 import React, {Component} from 'react';
 import { Route } from 'react-router-dom';
+import {connect} from 'react-redux';
+import {getCart, getProduct, addToCart, removeFromCart} from '../../store/actions';
 
-import Axios from '../../axio-cart';
 import CartSummary from '../../components/CartSummary/CartSummary';
 import ContactData from './ContactData/ContactData';
-import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
+
+const mapDispatchToProps = {getCart, getProduct, addToCart, removeFromCart}
+const mapStateToProps = (state) => (
+    {   
+        products: state.products, 
+        cart: state.cart,
+        totalPrice: state.totalPrice,
+        loading: state.loading, 
+        error: state.error 
+    }
+);
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 class Cart extends Component {
     state = {
-        cart: [],
-        totalPrice: 0,
-        viewingContactData: false,
-        isLoaded: false
+        localPrice: 0,
+        viewingContactData: false
     }
 
     componentDidMount() {
-        Axios.get('/cart/5f63e617b29b17b8d1f854a7/group-product')
-            .then(res => res.data)
-            .then (
-                    (data) => {
-                        this.setState({ cart: data[0], totalPrice: data[1], isLoaded: true })
-                    })
+        this.props.getProduct()
+        this.props.getCart()
     }
 
     checkoutCancelledHandler = () => {
@@ -37,18 +44,18 @@ class Cart extends Component {
         this.props.history.push('/home');
     }
 
-    decrementHandler = (price) => {
-        this.setState( { totalPrice: this.state.totalPrice + (price * -1) })
+    decrementHandler = (id) => {
+        this.props.removeFromCart(id, this.props.products)
     }
 
-    incrementHandler = (price) => {
-        this.setState ( { totalPrice: this.state.totalPrice + price })
+    incrementHandler = (id) => {
+        this.props.addToCart(id, this.props.products)
     }
 
-    render() {        
+    render() { 
         let CartPage =  <CartSummary
-                            cart = {this.state.cart}
-                            price = {this.state.totalPrice}
+                            cart = {this.props.cart}
+                            price = {this.props.totalPrice}
                             checkoutContinued={this.checkoutContinuedHandler}
                             goBackHome = {this.checkoutGoBackHomeHandler}
                             increment = {this.incrementHandler}
@@ -60,8 +67,8 @@ class Cart extends Component {
             CartPage =  <Route 
                             path={this.props.match.path + '/contact-data'} 
                             render={(props) => (<ContactData 
-                                                    cart={this.state.cart} 
-                                                    price={this.state.totalPrice} 
+                                                    cart={this.props.cart} 
+                                                    price={this.props.totalPrice} 
                                                     checkoutCancelled={this.checkoutCancelledHandler}
                                                     {...props} />)} />
         }
@@ -74,4 +81,4 @@ class Cart extends Component {
     }
 }
 
-export default Cart
+export default connector(Cart)

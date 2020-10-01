@@ -8,7 +8,7 @@ class ItemCards extends Component {
     render() {
         let elements = []
         //id: pos + 1
-        this.props.productsList.map(product => {
+        this.props.productsList.map(product => 
             elements.push(
                 <div className = {classes.Row}>
                     <Card className={classes.Card}>
@@ -26,7 +26,7 @@ class ItemCards extends Component {
                     </Card>
                 </div>
             )
-        });
+        );
    
     return (
         <div className={classes.ItemGroup}>

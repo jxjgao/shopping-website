@@ -12,13 +12,14 @@ class MoreInfo extends Component {
             <Aux>
                 <h2 className={cx(classes.Center, classes.Title)}>{this.props.product.title}</h2>
                 <img className={classes.Image}
-                    src={this.props.product.image}/>
+                    src={this.props.product.image}
+                    alt='Not found'/>
                 <p className={classes.Description}>{this.props.product.description}</p>
                 <p className={classes.Price}>${(this.props.product.price).toFixed(2)}</p>
                 <div className={classes.Button}>
                     <Button btnType = "Primary"
-                        clicked={() => this.props.addToCart(this.props.product._id)}>Add to Cart</Button>
-                
+                        clicked={() => this.props.addToCart(this.props.product._id)}
+                        disabled = {this.props.cartLoading}>Add to Cart</Button>
                     <Button 
                         btnType = "Danger"
                         clicked={this.props.moreInfoCancel}>Cancel</Button>

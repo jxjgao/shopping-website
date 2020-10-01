@@ -2,74 +2,63 @@ import React, { Component } from 'react';
 
 import classes from './Quantity.module.css';
 import cx from 'classnames';
-import Axios from '../../axio-cart';
-
 class Quantity extends Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
-        value: this.props.product.count, 
+        quantity: this.props.product.count, 
         disableDec: false, 
         disableInc: false
     }
 
     this.incrementHandler = this.incrementHandler.bind(this);
     this.decrementHandler = this.decrementHandler.bind(this);
-    this.increment = this.increment.bind(this)
-    this.decrement = this.decrement.bind(this)
+  }
+
+  componentDidUpdate(nextProps) {
+    if(nextProps.product.count !== this.props.product.count){
+      if (this.props.product.count > 0) {
+        this.setState( { quantity: this.props.product.count, disableDec: false })
+      }
+    }
   }
 
   incrementHandler() {
-    this.props.increment(this.props.product.price)
-    this.increment()
+    const addQuantity = this.state.quantity + 1;
 
-  }
-
-  decrementHandler() {
-    this.props.decrement(this.props.product.price)
-    this.decrement()
-  }
-  
-
-  increment() {
-    const plusState = this.state.value + 1;
-
-    if (this.state.value < this.props.max){
-      this.setState({value: plusState});
-      this.setState({disable: false});
-      Axios.put('/cart/add-to-cart', {productID: this.props.product._id, userID: '5f63e617b29b17b8d1f854a7'})
-      
+    if (this.state.quantity < this.props.max){
+      this.props.increment(this.props.product._id)  
+      this.setState({quantity: addQuantity});
     }
 
-    if (this.state.value === (this.props.max - 1)) {
+    if (this.state.quantity === (this.props.max - 1)) {
       this.setState({disableInc: true});
     }
-    if (this.state.value === this.props.min) {
+    if (this.state.quantity === this.props.min) {
       this.setState({disableDec: false});
     }
   }
 
-  decrement() {
-    const minusState = this.state.value - 1;
+  decrementHandler() {
+    const removeQuantity = this.state.quantity - 1;
 
-    if (this.state.value > this.props.min) {
-      this.setState({value: minusState });
-      Axios.put('/cart/remove-from-cart', {productID: this.props.product._id, userID: '5f63e617b29b17b8d1f854a7'})
-
-      if (this.state.value === this.props.min + 1) {
-        this.setState({disableDec: true});
-      }
-    } else {
-      this.setState({value: this.props.min});
+    if (this.state.quantity > this.props.min) {
+      this.props.decrement(this.props.product._id)
+      this.setState({quantity: removeQuantity });
     }
-    if (this.state.value === this.props.max) {
+
+    if (this.state.quantity === this.props.min + 1) {
+      this.setState({disableDec: true});
+    }
+    if (this.state.quantity === this.props.max) {
       this.setState({disableInc: false});
     }
   }
 
   render() {
+    console.log('title', this.props.product.title, 'this.props.product.count', this.props.product.count, 'this.state.quantity:', this.state.quantity)
     const { disableDec, disableInc } = this.state;
     let disabledDec = disableDec ? classes.QuantityDisable : '';
     let disabledInc = disableInc ? classes.QuantityDisable : ''
@@ -79,8 +68,8 @@ class Quantity extends Component {
         <button className={cx(classes.QuantityModifier, 
                                 classes.LeftModifier,
                                 disabledDec)} 
-                                onClick={() => this.decrementHandler()}>&ndash;</button>
-        <input className={classes.QuantityDisplay} type="text" value={this.state.value} readOnly />
+                                onClick={this.decrementHandler}>&ndash;</button>
+        <input className={classes.QuantityDisplay} type="text" value={this.state.quantity} readOnly />
         <button className={cx(classes.QuantityModifier, 
                                 classes.RightModifier,
                                 disabledInc)} 

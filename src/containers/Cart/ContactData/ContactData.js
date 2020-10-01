@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Button from '../../../components/UI/Button/Button';
 import Spinner from '../../../components/UI/Spinner/Spinner';
-import Axios from '../../../axio-cart';
+import axios from '../../../axio-cart';
 import Input from '../../../components/UI/Input/Input';
 import classes from './ContactData.module.css';
 
@@ -94,8 +94,8 @@ class ContactData extends Component {
                 elementConfig: {
                     options: [
                         {displayValue: 'Shipping Method'},
-                        {value: 'standard', displayValue: 'Standard Shipping - $12.00'},
-                        {value: 'expedited', displayValue: 'Expedited Shipping - $25.00'}
+                        {value: 'standard', displayValue: 'Standard Shipping'},
+                        {value: 'expedited', displayValue: 'Expedited Shipping'}
                     ]
                 },
                 value: '',
@@ -117,7 +117,6 @@ class ContactData extends Component {
             formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier].value;
         }
         //name, address, zipCode, country, email, paymentType, product, userID, price
-        console.log(this.state.formIsValid)
         const order = {
             name: formData.name,
             address: formData.address,
@@ -131,10 +130,10 @@ class ContactData extends Component {
             shippingMethod: formData.shippingMethod
         }
 
-        Axios.post( '/order/create-order', order )
+        axios.post( '/order/create-order', order )
             .then( response => {
                 this.setState( { isLoaded: true } );
-                Axios.put('/cart/5f63e617b29b17b8d1f854a7/clear-cart-by-user-id');
+                axios.put('/cart/5f63e617b29b17b8d1f854a7/clear-cart-by-user-id');
                 this.props.history.push( '/home' );
             } )
             .catch( error => {

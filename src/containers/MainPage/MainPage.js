@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {store} from 'react-notifications-component';
-import _ from 'lodash';
+import {connect} from 'react-redux';
+import {getProduct, addToCart} from '../../store/actions';
 
-import Axios from '../../axio-cart';
+import axios from '../../axio-cart';
 import ItemCards from '../../components/ItemCards/ItemCards.js';
 import Aux from '../../hoc/Aux/Aux';
 import Spinner from '../../components/UI/Spinner/Spinner';
@@ -11,33 +12,38 @@ import MoreInfo from '../../components/MoreInfo/MoreInfo';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 
+const mapDispatchToProps = {getProduct, addToCart}
+const mapStateToProps = (state) => (
+    {   
+        products: state.products, 
+        cart: state.cart,
+        cartLoading: state.cartLoading,
+        loading: state.loading, 
+        error: state.error 
+    }
+);
+//this is received as a prop
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
 class MainPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
             products: [],
-            cartFound: false,
             viewingMoreInfo: false,
             currentViewingProductId: 0,
-            isLoaded: false
         }
-        this.addToCart = this.addToCart.bind(this);
+
         this.createNotification = this.createNotification.bind(this);
     }
 
     componentDidMount() {
-        Axios.get('/product/find-all-product')
-            .then(res => res.data)
-            .then(
-                (data) => {
-                    this.setState({ products: data, isLoaded: true })
-                }
-            )
+        this.props.getProduct()
     }
 
     addToCartHandler = (id, type) => {
         //returns product object with specified id
-        this.addToCart(id);
+        this.props.addToCart(id, this.props.products);
         this.createNotification(type);
 
     }
@@ -48,23 +54,6 @@ class MainPage extends Component {
 
     moreInfoCancelHandler = () => {
         this.setState({viewingMoreInfo: false})
-    }
-
-    addToCart = async(id) => {
-        const product = this.state.products.find(product => product._id === id)
-        const productPrice = product.price
-        //if it returns empty object, it means that the cart doesn't current exist, so we create a new one
-        //hard coded userID fro now
-        //console.log( _.isEmpty({}) );  true
-        await Axios.get('/cart/5f63e617b29b17b8d1f854a7/find-cart-by-id')
-                    .then(res => (_.isEmpty(res.data) === true) ? this.setState({cartFound: false}) : this.setState({cartFound: true}))
-            //
-        
-        if (this.state.cartFound === true) {
-            await Axios.put('/cart/add-to-cart', {productID: product._id, userID: '5f63e617b29b17b8d1f854a7', price: productPrice})
-        } else {
-            await Axios.post('/cart/create-cart', {productID: product._id, userID: '5f63e617b29b17b8d1f854a7', price: productPrice})
-        }
     }
  
     createNotification = () => {
@@ -83,11 +72,11 @@ class MainPage extends Component {
 
     render() {
         let mainPageDisplay =  <ItemCards 
-                                productsList={this.state.products} 
+                                productsList={this.props.products} 
                                 moreInfo={this.moreInfoClickHandler}
                                 />
 
-        if (this.state.isLoaded === false) {
+        if (this.props.loading) {
             mainPageDisplay = <Spinner />
         }
 
@@ -97,8 +86,9 @@ class MainPage extends Component {
             moreInfoSummary = (
             <MoreInfo
                 addToCart={this.addToCartHandler}
+                cartLoading = {this.props.cartLoading}
                 moreInfoCancel={this.moreInfoCancelHandler}
-                product ={this.state.products.find(product => product._id === this.state.currentViewingProductId)}/>
+                product ={this.props.products.find(product => product._id === this.state.currentViewingProductId)}/>
             )
         }
 
@@ -113,4 +103,5 @@ class MainPage extends Component {
     }
 }
 
-export default withErrorHandler(MainPage, Axios)
+//only knows about redux here 
+export default connector(withErrorHandler(MainPage, axios))
