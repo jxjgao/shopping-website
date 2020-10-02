@@ -23,7 +23,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.GET_PRODUCT: {
             return {
                 ...state,
-                products: action.payload.data,
+                products: action.payload,
                 loading: false,
                 error: null
             };
@@ -56,8 +56,8 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 cart: action.payload.data[0],
                 totalPrice: action.payload.data[1]
-            }
-
+            };
+    
         default:
             return state;
     }

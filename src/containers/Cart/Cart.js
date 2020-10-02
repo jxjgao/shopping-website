@@ -18,12 +18,11 @@ const mapStateToProps = (state) => (
 );
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
-
 class Cart extends Component {
     state = {
-        localPrice: 0,
-        viewingContactData: false
-    }
+            localPrice: 0,
+            viewingContactData: false
+        }
 
     componentDidMount() {
         this.props.getProduct()
@@ -32,12 +31,12 @@ class Cart extends Component {
 
     checkoutCancelledHandler = () => {
         this.props.history.push('/cart');
-        this.setState( { viewingContactData: false })
+        this.setState( { viewingContactData: false });
     }
 
     checkoutContinuedHandler = () => {
         this.props.history.replace('/cart/contact-data');
-        this.setState( { viewingContactData: true })
+        this.setState( { viewingContactData: true });
     }
 
     checkoutGoBackHomeHandler = () => {
@@ -45,11 +44,11 @@ class Cart extends Component {
     }
 
     decrementHandler = (id) => {
-        this.props.removeFromCart(id, this.props.products)
+        this.props.removeFromCart(id, this.props.products);
     }
 
     incrementHandler = (id) => {
-        this.props.addToCart(id, this.props.products)
+        this.props.addToCart(id, this.props.products);
     }
 
     render() { 
@@ -62,7 +61,6 @@ class Cart extends Component {
                             decrement = {this.decrementHandler}
                             />
                             
-
         if (this.state.viewingContactData) {
             CartPage =  <Route 
                             path={this.props.match.path + '/contact-data'} 

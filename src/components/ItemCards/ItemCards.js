@@ -10,7 +10,8 @@ class ItemCards extends Component {
         //id: pos + 1
         this.props.productsList.map(product => 
             elements.push(
-                <div className = {classes.Row}>
+                <div className = {classes.Row}
+                     key = {product._id}>
                     <Card className={classes.Card}>
                     <a href="#" onClick={()=> this.props.moreInfo(product._id)}>
                     <Card.Img 

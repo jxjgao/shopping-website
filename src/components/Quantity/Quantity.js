@@ -12,7 +12,6 @@ class Quantity extends Component {
         disableDec: false, 
         disableInc: false
     }
-
     this.incrementHandler = this.incrementHandler.bind(this);
     this.decrementHandler = this.decrementHandler.bind(this);
   }
@@ -32,7 +31,6 @@ class Quantity extends Component {
       this.props.increment(this.props.product._id)  
       this.setState({quantity: addQuantity});
     }
-
     if (this.state.quantity === (this.props.max - 1)) {
       this.setState({disableInc: true});
     }
@@ -48,7 +46,6 @@ class Quantity extends Component {
       this.props.decrement(this.props.product._id)
       this.setState({quantity: removeQuantity });
     }
-
     if (this.state.quantity === this.props.min + 1) {
       this.setState({disableDec: true});
     }
@@ -58,7 +55,6 @@ class Quantity extends Component {
   }
 
   render() {
-    console.log('title', this.props.product.title, 'this.props.product.count', this.props.product.count, 'this.state.quantity:', this.state.quantity)
     const { disableDec, disableInc } = this.state;
     let disabledDec = disableDec ? classes.QuantityDisable : '';
     let disabledInc = disableInc ? classes.QuantityDisable : ''

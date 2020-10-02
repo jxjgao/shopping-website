@@ -27,7 +27,8 @@ class CartSummary extends Component {
     this.props.cart.filter(product => product.count > 0)
                     .map(product => 
                                 elements.push(
-                                        <div className={classes.CartItem}>
+                                        <div className={classes.CartItem}
+                                              key = {product._id}>
                                             <span>
                                                 <img className={classes.CartImage}
                                                     src={product.image}
@@ -39,7 +40,7 @@ class CartSummary extends Component {
                                             </span>
                                         </div>
                                 )
-                                )        
+                            )        
 
     let subtotalField = <div>
                             Subtotal: ${(this.props.price).toFixed(2)}
@@ -52,8 +53,7 @@ class CartSummary extends Component {
 
     if (this.props.cart.length === 0) {
         subtotalField = null
-        checkoutButton = null
-                            
+        checkoutButton = null                    
     }
 
     return (

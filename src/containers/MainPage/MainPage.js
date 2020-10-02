@@ -24,7 +24,6 @@ const mapStateToProps = (state) => (
 );
 //this is received as a prop
 const connector = connect(mapStateToProps, mapDispatchToProps);
-
 class MainPage extends Component {
     constructor(props) {
         super(props);
@@ -33,7 +32,6 @@ class MainPage extends Component {
             viewingMoreInfo: false,
             currentViewingProductId: 0,
         }
-
         this.createNotification = this.createNotification.bind(this);
     }
 
@@ -41,11 +39,10 @@ class MainPage extends Component {
         this.props.getProduct()
     }
 
-    addToCartHandler = (id, type) => {
+    addToCartHandler = (id) => {
         //returns product object with specified id
         this.props.addToCart(id, this.props.products);
-        this.createNotification(type);
-
+        this.createNotification();
     }
 
     moreInfoClickHandler = (id) => {
@@ -60,12 +57,12 @@ class MainPage extends Component {
         store.addNotification({
             title: 'Added to Cart',
             message: 'Item Successfully Added to Cart',
-            type: 'success',                         // 'default', 'success', 'info', 'warning'
+            type: 'info',                         // 'default', 'success', 'info', 'warning'
             container: 'top-right',                // where to position the notifications
             animationIn: ["animated", "fadeIn"],     // animate.css classes that's applied
             animationOut: ["animated", "fadeOut"],   // animate.css classes that's applied
             dismiss: {
-              duration: 5000
+              duration: 3000
             }
           })
     }

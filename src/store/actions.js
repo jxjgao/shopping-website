@@ -13,12 +13,13 @@ export const getProduct = () => async (dispatch) => {
     dispatch({type: 'LOADING'});
     try {
         const res = await axios.get('/product/find-all-product')
+        const products = res.data
+        products.sort()
     
-        dispatch({type: 'GET_PRODUCT', payload: res})
+        dispatch({type: 'GET_PRODUCT', payload: products})
     } catch(error){
         dispatch({type: 'GET_PRODUCT_FAIL', payload: error})
     }
-    
 }
 
 export const addToCart = (id, productList) => async (dispatch) => {
