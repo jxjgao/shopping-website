@@ -158,5 +158,5 @@
     "postcss-loader": "3.0.0",
     "style-loader": "0.23.1"
   },
-  "proxy": "http://localhost:9055/"
+  "proxy": "https://my-deer-shop.herokuapp.com/"
 }
